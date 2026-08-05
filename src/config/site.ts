@@ -21,11 +21,11 @@ export const siteConfig = {
 } as const;
 
 export const navigation: NavigationItem[] = [
-  { label: "Início", href: "#inicio" },
-  { label: "Universos", href: "#universos" },
-  { label: "Portfólio", href: "#portfolio" },
-  { label: "Sobre", href: "#sobre" },
-  { label: "Contato", href: "#contato" },
+  { label: "Início", href: "/#inicio" },
+  { label: "Universos", href: "/#universos" },
+  { label: "Portfólio", href: "/portfolio" },
+  { label: "Sobre", href: "/#sobre" },
+  { label: "Contato", href: "/#contato" },
 ];
 
 export function getContactHref() {
@@ -41,4 +41,3 @@ export function getContactHref() {
 
   return `https://wa.me/${phone}?text=${message}`;
 }
-

@@ -73,6 +73,35 @@ Apenas manter a estrutura pronta para recebê-las.
 
 ---
 
+## 3.1 Nova fase autorizada — portfólio sistêmico
+
+> Registro histórico: a estratégia estática acima orientou a primeira entrega da
+> Home. A partir de 2026-08-05, o usuário autorizou oficialmente uma nova fase.
+> Ela não apaga nem invalida o trabalho anterior.
+
+Nesta fase, implementar com a stack compatível com Lovable:
+
+- Supabase para banco PostgreSQL, autenticação e políticas de acesso;
+- Portfólio público alimentado por projetos publicados;
+- Página individual de case;
+- Painel administrativo autenticado, sem cadastro público;
+- CRUD, ordenação, destaque e estados `draft`, `published` e `archived`;
+- Relação de cada projeto com um ou mais dos quatro estúdios;
+- Migrations versionadas e tipos no repositório;
+- Fallback local obrigatório quando o banco estiver vazio, indisponível ou sem configuração.
+
+Regras invioláveis desta fase:
+
+- Preservar integralmente a estrutura visual da Home; alterar apenas a origem dos dados do portfólio e do destaque.
+- Somente projetos `published` podem aparecer publicamente.
+- Não confiar apenas em rotas protegidas: permissões administrativas devem ser impostas por RLS no banco.
+- Nunca incluir chaves, tokens ou segredos no Git.
+- Não inventar clientes, autorizações, depoimentos, evidências, métricas ou resultados.
+- Imagens, vídeos e documentos são referenciados por URL; arquivos binários não pertencem às tabelas.
+- Mudanças desta fase devem nascer em branch própria e só chegar à `main` após lint, typecheck, testes, build e revisão.
+
+---
+
 ## 4. Arquitetura de conteúdo
 
 Centralize os dados editáveis.

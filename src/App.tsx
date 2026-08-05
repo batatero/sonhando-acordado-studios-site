@@ -7,10 +7,12 @@ import { SectionHeading } from "@/components/SectionHeading";
 import { UniverseCard } from "@/components/UniverseCard";
 import { getContactHref, siteConfig } from "@/config/site";
 import { processSteps } from "@/data/process";
-import { featuredProject, projects } from "@/data/projects";
 import { universes } from "@/data/universes";
+import { useProjectsContent } from "@/hooks/useProjectsContent";
 
 function App() {
+  const { featuredProject, projects } = useProjectsContent();
+
   return (
     <>
       <a className="skip-link" href="#conteudo">
@@ -77,14 +79,20 @@ function App() {
           <Container className="featured__layout">
             <div className="featured__visual">
               <img
-                src="/assets/hero-sonhando-acordado-studios.webp"
-                alt="Menino observa um céu estrelado diante de um castelo distante"
+                src={
+                  featuredProject.coverImageUrl ??
+                  "/assets/hero-sonhando-acordado-studios.webp"
+                }
+                alt={
+                  featuredProject.coverAlt ||
+                  `Imagem do projeto ${featuredProject.title}`
+                }
                 loading="lazy"
               />
               <span className="featured__badge">Universo original</span>
             </div>
             <div className="featured__content">
-              <p className="eyebrow">{featuredProject.eyebrow}</p>
+              <p className="eyebrow">Projeto em destaque</p>
               <h2 id="featured-title">{featuredProject.title}</h2>
               <p>{featuredProject.description}</p>
               <ul>
@@ -92,7 +100,7 @@ function App() {
                   <li key={feature}>{feature}</li>
                 ))}
               </ul>
-              <Button href="#portfolio" variant="ghost">
+              <Button href={featuredProject.projectUrl ?? "#portfolio"} variant="ghost">
                 Conheça o universo
               </Button>
             </div>

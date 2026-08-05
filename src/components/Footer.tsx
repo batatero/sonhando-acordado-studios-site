@@ -36,7 +36,7 @@ export function Footer() {
           <ul>
             {universes.map((universe) => (
               <li key={universe.id}>
-                <a href="#universos">{universe.title}</a>
+                <a href="/#universos">{universe.title}</a>
               </li>
             ))}
           </ul>

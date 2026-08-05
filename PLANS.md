@@ -4,6 +4,10 @@
 
 Construir a Home institucional, cinematográfica e mobile-first do Sonhando Acordado Studios, conectando narrativa, criação, inteligência e sistemas em um único ecossistema e conduzindo o visitante ao contato.
 
+### Fase atual — Centro público de autoridade e portfólio
+
+Evoluir a entrega estática para um portfólio sistêmico com Supabase e painel administrativo seguro, preservando integralmente a Home e mantendo os dados locais como fallback resiliente.
+
 ## Estado inicial
 
 - Starter inicial criado, sem personalização visual.
@@ -30,11 +34,17 @@ Construir a Home institucional, cinematográfica e mobile-first do Sonhando Acor
 - Metadados, robots e sitemap.
 - Conteúdo centralizado.
 - Responsividade, acessibilidade e performance.
+- Banco relacional versionado com Supabase.
+- Autenticação e autorização administrativa sem cadastro público.
+- Painel para criar, editar, ordenar, destacar, publicar, despublicar e arquivar projetos.
+- Portfólio público e página individual de case.
+- Mídias e evidências referenciadas por URL.
 
 ## Fora de escopo
 
-- Backend, banco de dados e CMS.
-- Autenticação.
+- Cadastro público e gestão pública de usuários.
+- Upload binário nesta etapa; mídias serão armazenadas externamente e referenciadas por URL.
+- Editor visual rico/WYSIWYG.
 - Pagamentos.
 - Métricas inventadas.
 - Depoimentos ou clientes fictícios.
@@ -49,6 +59,9 @@ Construir a Home institucional, cinematográfica e mobile-first do Sonhando Acor
 - `src/data/`: universos, projetos e demais conteúdos estruturados.
 - `src/index.css`: tokens e sistema visual mobile-first.
 - `public/assets/`: logo, hero e imagens locais.
+- `src/services/projects.ts`: leitura pública dos projetos com fallback local.
+- `src/integrations/supabase/`: cliente e tipos do banco compatíveis com Lovable.
+- `supabase/migrations/`: estrutura versionada do banco, políticas e índices.
 - `index.html`: metadados iniciais e dados estruturados.
 
 ## Stack compatível com Lovable
@@ -58,7 +71,8 @@ Construir a Home institucional, cinematográfica e mobile-first do Sonhando Acor
 - Vite.
 - Tailwind CSS.
 - Componentes funcionais e dados estruturados em `src/`.
-- Sem dependência de backend, CMS ou framework server-side nesta fase.
+- Supabase como backend de conteúdo, usando a integração padrão do Lovable.
+- Fallback local imediato para preservar a Home quando o banco estiver vazio ou indisponível.
 
 ## Componentes
 
@@ -73,6 +87,11 @@ Construir a Home institucional, cinematográfica e mobile-first do Sonhando Acor
 - `AboutStudio`
 - `FinalCta`
 - `SiteFooter`
+- `PortfolioPage`
+- `ProjectDetailPage`
+- `AdminPage`
+- `ProjectForm`
+- `ProtectedAdminRoute`
 
 ## Conteúdo
 
@@ -149,6 +168,9 @@ Construir a Home institucional, cinematográfica e mobile-first do Sonhando Acor
 - Inspeção em 360, 390, 768, 1024, 1280, 1440 e 1920 px.
 - Verificação de rolagem horizontal.
 - Verificação de `prefers-reduced-motion`.
+- Testes de fallback e transformação de dados.
+- Testes estruturais das migrations e políticas RLS.
+- Verificação manual do fluxo de autenticação e CRUD após conectar um projeto Supabase.
 
 ## Riscos
 
@@ -157,6 +179,8 @@ Construir a Home institucional, cinematográfica e mobile-first do Sonhando Acor
 3. Portfólio possui poucos assets finais; evitar clientes, resultados e métricas inventadas.
 4. Hero precisa preservar sujeito no mobile; validar `object-position` por breakpoint.
 5. Referência desktop é densa; simplificar composição no mobile sem remover conteúdo.
+6. Credenciais do Supabase não existem no repositório; o cliente deve permanecer opcional e nunca quebrar a Home.
+7. Escrita pública seria insegura; nesta etapa somente projetos publicados podem ser lidos anonimamente e toda escrita permanece bloqueada por RLS.
 
 ## Critérios de aceite
 
@@ -182,6 +206,41 @@ Construir a Home institucional, cinematográfica e mobile-first do Sonhando Acor
 - [ ] CP7 — Relatório final.
 
 ## Registro de progresso
+
+### Replanejamento 02 — 2026-08-05
+
+- O usuário solicitou a evolução do conteúdo local para um backend compatível com Lovable.
+- Supabase foi escolhido por ser a integração de banco padrão do ecossistema Lovable e por não exigir substituir a stack atual.
+- A Home existente será preservada; apenas a fonte dos dados de projeto será conectada por um hook resiliente.
+- Quando não houver credenciais, registros publicados ou conexão disponível, os conteúdos genéricos locais continuarão visíveis.
+- O banco aceitará projeto em destaque de qualquer um dos quatro estúdios, com no máximo um destaque publicado por vez.
+- O complemento obrigatório expandiu a etapa para incluir autenticação e painel administrativo completos.
+- O modelo passa a relacionar cada projeto com um ou mais estúdios e inclui mídia, links, evidências, narrativa do case e SEO.
+- A implementação será feita em `feat/backend-portfolio-admin`; integração na `main` depende de revisão e validações aprovadas.
+
+## Checkpoints da fase sistêmica
+
+- [x] SP0 — `main` sincronizada, instruções e stack inspecionadas.
+- [x] SP1 — Escopo e arquitetura replanejados em branch própria.
+- [x] SP2 — Migration, RLS, tipos e camada de repositório.
+- [x] SP3 — Home ligada ao repositório com fallback preservado.
+- [x] SP4 — Listagem pública e página individual.
+- [x] SP5 — Autenticação e painel administrativo.
+- [x] SP6 — Lint, typecheck, testes, build e revisão do diff.
+- [ ] SP7 — Revisão do usuário antes da integração na `main`.
+
+### Evidências SP2–SP6 — 2026-08-05
+
+- Migration com enums, validações, índice de destaque único, allowlist de um administrador e RLS.
+- Home preservada e alimentada por `useProjectsContent`, com fallback local imediato.
+- Rotas `/portfolio`, `/portfolio/:slug` e `/admin` implementadas.
+- Filtros por estúdio, case detalhado, SEO, mídias e links externos implementados.
+- Painel com login, CRUD, confirmação de exclusão, publicação, despublicação, arquivamento, destaque e ordem manual.
+- `npm run lint`: aprovado.
+- `npm run typecheck`: aprovado.
+- `npm run test`: 6 testes aprovados.
+- `npm run build`: aprovado; CSS 27,95 KB e JavaScript 477,11 KB antes de gzip.
+- Smoke test HTTP: `/`, `/portfolio`, `/portfolio/aventuras-livia-laura` e `/admin` retornaram 200 no servidor Vite.
 
 ### CP0 — 2026-07-30
 

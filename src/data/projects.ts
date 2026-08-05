@@ -1,49 +1,108 @@
 import type { Project } from "@/types/content";
 
-export const featuredProject = {
-  title: "As Aventuras de Lívia e Laura",
-  eyebrow: "Projeto em destaque",
-  description:
-    "Um universo original criado a partir de amor, imaginação, música e inteligência artificial.",
-  features: ["Filme", "Músicas", "Personagens", "Universo narrativo"],
-} as const;
-
-export const projects: Project[] = [
+export const fallbackProjects: Project[] = [
   {
     id: "aventuras-livia-laura",
+    slug: "aventuras-livia-laura",
     title: "As Aventuras de Lívia e Laura",
+    studios: ["story"],
     category: "Filme e universo narrativo",
     summary:
       "Uma experiência cinematográfica familiar que reúne história, personagens e música.",
+    description:
+      "Um universo original criado a partir de amor, imaginação, música e inteligência artificial.",
+    features: ["Filme", "Músicas", "Personagens", "Universo narrativo"],
     status: "disponível",
     visual: "cinema",
+    coverImageUrl: "/assets/hero-sonhando-acordado-studios.webp",
+    technologies: [],
+    deliveryType: "Filme e universo narrativo",
+    gallery: [],
+    videos: [],
+    links: [],
+    evidence: [],
+    deliverables: ["Filme", "Músicas", "Personagens"],
+    stage: "released",
+    locale: "pt-BR",
+    isFeatured: true,
+    sortOrder: 10,
   },
   {
     id: "mundos-personalizados",
+    slug: "mundos-personalizados",
     title: "Mundos personalizados",
+    studios: ["story"],
     category: "Narrativa e animação",
     summary:
       "Estrutura criativa para transformar pessoas, ideias e memórias em universos originais.",
+    description:
+      "Histórias e experiências personalizadas construídas para dar forma a ideias, pessoas e memórias.",
+    features: ["Narrativa", "Animação", "Personagens"],
     status: "em desenvolvimento",
     visual: "world",
+    technologies: [],
+    deliveryType: "Universo narrativo",
+    gallery: [],
+    videos: [],
+    links: [],
+    evidence: [],
+    deliverables: [],
+    stage: "concept",
+    locale: "pt-BR",
+    isFeatured: false,
+    sortOrder: 20,
   },
   {
     id: "editoriais-criativos",
+    slug: "editoriais-criativos",
     title: "Editoriais criativos",
+    studios: ["creative"],
     category: "Fotografia e conteúdo",
     summary:
       "Direção visual para retratos, campanhas e marcas com identidade e intenção.",
+    description:
+      "Conteúdo visual pensado para conectar marcas e pessoas com identidade, direção e intenção.",
+    features: ["Fotografia", "Direção criativa", "Conteúdo"],
     status: "em desenvolvimento",
     visual: "portrait",
+    technologies: [],
+    deliveryType: "Conteúdo visual",
+    gallery: [],
+    videos: [],
+    links: [],
+    evidence: [],
+    deliverables: [],
+    stage: "concept",
+    locale: "pt-BR",
+    isFeatured: false,
+    sortOrder: 30,
   },
   {
     id: "sistemas-com-proposito",
+    slug: "sistemas-com-proposito",
     title: "Sistemas com propósito",
+    studios: ["ai", "systems"],
     category: "Inteligência e produto",
     summary:
       "Soluções digitais estruturadas para organizar conhecimento, processos e experiências.",
+    description:
+      "Produtos e sistemas digitais que transformam processos complexos em experiências claras e escaláveis.",
+    features: ["Produto digital", "Automação", "Sistemas"],
     status: "em desenvolvimento",
     visual: "system",
+    technologies: [],
+    deliveryType: "Produto digital",
+    gallery: [],
+    videos: [],
+    links: [],
+    evidence: [],
+    deliverables: [],
+    stage: "prototype",
+    locale: "pt-BR",
+    isFeatured: false,
+    sortOrder: 40,
   },
 ];
 
+export const fallbackFeaturedProject =
+  fallbackProjects.find((project) => project.isFeatured) ?? fallbackProjects[0];
